@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Debug Header - Portal Coder</title>
+  
+  <!-- CSS Moderno -->
+  <link rel="stylesheet" href="modern-theme.css"/>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="animations.css"/>
+  <link rel="stylesheet" href="responsive.css"/>
+  
+  <!-- Scripts -->
+  <script src="user-manager.js"></script>
+  <script src="api-client.js"></script>
+  <script src="script.js"></script>
+  <script src="modern-interactions.js"></script>
+  
+  <style>
+    /* Debug styles para verificar a header */
+    .header {
+      border: 2px solid red !important;
+    }
+    
+    .header-content {
+      border: 2px solid blue !important;
+    }
+    
+    .header-logo {
+      border: 2px solid green !important;
+    }
+    
+    .header-nav {
+      border: 2px solid yellow !important;
+    }
+    
+    .nav-list {
+      border: 2px solid purple !important;
+    }
+    
+    .nav-link {
+      border: 1px solid orange !important;
+    }
+    
+    .btn {
+      border: 1px solid cyan !important;
+    }
+    
+    /* Conteúdo de teste */
+    .test-content {
+      padding: 100px 20px;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header para debug -->
+  <header class="header" role="banner">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-logo">
+          <img src="backend/public/media/logo.png" alt="PortalCoder" class="logo-img">
+        </div>
+        <nav class="header-nav" role="navigation" aria-label="Menu principal">
+          <ul class="nav-list">
+            <li><a href="#sobre" class="nav-link">Sobre</a></li>
+            <li><a href="#cursos" class="nav-link">Cursos</a></li>
+            <li><a href="#contato" class="nav-link">Contato</a></li>
+            <li><button id="modo-escuro-toggle" class="btn btn-ghost btn-sm" aria-label="Alternar modo escuro">🌙</button></li>
+            <li><button onclick="aumentarFonte()" class="btn btn-ghost btn-sm" aria-label="Aumentar fonte">A+</button></li>
+            <li><button onclick="diminuirFonte()" class="btn btn-ghost btn-sm" aria-label="Diminuir fonte">A-</button></li>
+            <li><button onclick="fazerLogout()" class="btn btn-danger btn-sm" aria-label="Fazer logout">🚪 Sair</button></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo de teste -->
+  <main class="test-content">
+    <div class="container">
+      <h1>Debug da Header</h1>
+      <p>Esta página mostra as bordas coloridas para identificar problemas de layout na header.</p>
+      <ul>
+        <li><strong>Vermelho</strong> - .header</li>
+        <li><strong>Azul</strong> - .header-content</li>
+        <li><strong>Verde</strong> - .header-logo</li>
+        <li><strong>Amarelo</strong> - .header-nav</li>
+        <li><strong>Roxo</strong> - .nav-list</li>
+        <li><strong>Laranja</strong> - .nav-link</li>
+        <li><strong>Ciano</strong> - .btn</li>
+      </ul>
+    </div>
+  </main>
+
+  <script>
+    function aumentarFonte() { alert('A+'); }
+    function diminuirFonte() { alert('A-'); }
+    function fazerLogout() { alert('Logout'); }
+    
+    document.getElementById('modo-escuro-toggle').addEventListener('click', function() {
+      document.body.classList.toggle('modo-escuro');
+      this.textContent = document.body.classList.contains('modo-escuro') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>

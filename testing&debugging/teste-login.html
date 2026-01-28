@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teste Login - Portal Coder</title>
+  
+  <!-- CSS Moderno -->
+  <link rel="stylesheet" href="modern-theme.css"/>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="animations.css"/>
+  <link rel="stylesheet" href="responsive.css"/>
+  
+  <!-- Scripts -->
+  <script src="user-manager.js"></script>
+  <script src="api-client.js"></script>
+  <script src="script.js"></script>
+  <script src="modern-interactions.js"></script>
+  
+  <style>
+    /* Estilos específicos para login moderno */
+    .login-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      background-image: url('backend/public/media/Background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+    
+    .login-section .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .login-container {
+      max-width: 420px;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-2xl);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+    
+    .login-logo {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    
+    .logo-login {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      transition: transform var(--transition-normal);
+    }
+    
+    .logo-login:hover {
+      transform: scale(1.05);
+    }
+    
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: var(--space-6);
+      color: var(--text-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-2xl);
+    }
+    
+    .login-container .form-group {
+      margin-bottom: var(--space-5);
+    }
+    
+    .login-container .form-label {
+      color: var(--text-primary);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-2);
+    }
+    
+    .login-container .form-input {
+      background: var(--white);
+      border: 2px solid var(--glass-border);
+      color: var(--text-primary);
+    }
+    
+    .login-container .form-input:focus {
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .login-container .btn {
+      width: 100%;
+      margin-top: var(--space-4);
+      background: var(--gradient-primary);
+      color: var(--white);
+      font-weight: var(--font-weight-semibold);
+      padding: var(--space-4) var(--space-6);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+    }
+    
+    .login-container .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .login-container p {
+      margin-top: var(--space-4);
+      text-align: center;
+      color: var(--text-secondary);
+    }
+    
+    .login-container a {
+      color: var(--primary-600);
+      font-weight: var(--font-weight-semibold);
+      transition: color var(--transition-fast);
+    }
+    
+    .login-container a:hover {
+      color: var(--primary-700);
+    }
+    
+    .test-buttons {
+      margin-top: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .test-btn {
+      padding: var(--space-2) var(--space-4);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: var(--font-size-sm);
+    }
+    
+    .test-btn:hover {
+      background: var(--primary-50);
+      border-color: var(--primary-300);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-section">
+    <main class="container">
+      <div class="login-container animate-scale-in" role="form">
+        <div class="login-logo">
+          <img src="backend/public/media/logo.png" alt="Logo Portal Coder" class="logo-login">
+        </div>
+        <h2>Teste de Login - Portal Coder</h2>
+        <form id="loginForm" class="animate-fade-in-up">
+          <div class="form-group">
+            <label for="usuario" class="form-label">Usuário</label>
+            <input type="text" id="usuario" name="usuario" class="form-input" required aria-required="true" placeholder="Digite seu usuário"/>
+          </div>
+
+          <div class="form-group">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" id="senha" name="senha" class="form-input" required aria-required="true" placeholder="Digite sua senha"/>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+          <p id="loginAviso" role="alert" class="alert" style="display: none;"></p>
+        </form>
+        
+        <div class="test-buttons">
+          <h4 style="color: var(--text-primary); margin-bottom: var(--space-3);">Testes Rápidos:</h4>
+          <button class="test-btn" onclick="testarLogin('admin', '1234')">✅ Admin correto (admin/1234)</button>
+          <button class="test-btn" onclick="testarLogin('teste', '123456')">✅ Usuário correto (teste/123456)</button>
+          <button class="test-btn" onclick="testarLogin('admin', 'errado')">❌ Senha incorreta (admin/errado)</button>
+          <button class="test-btn" onclick="testarLogin('inexistente', '123')">⚠️ Usuário inexistente (inexistente/123)</button>
+          <button class="test-btn" onclick="testarLogin('', '')">❌ Campos vazios</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function testarLogin(usuario, senha) {
+      document.getElementById('usuario').value = usuario;
+      document.getElementById('senha').value = senha;
+      validarLogin();
+    }
+  </script>
+</body>
+</html>

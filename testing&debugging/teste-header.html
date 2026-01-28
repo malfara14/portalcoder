@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teste Header - Portal Coder</title>
+  
+  <!-- CSS Moderno -->
+  <link rel="stylesheet" href="modern-theme.css"/>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="animations.css"/>
+  <link rel="stylesheet" href="responsive.css"/>
+  
+  <!-- Scripts -->
+  <script src="user-manager.js"></script>
+  <script src="api-client.js"></script>
+  <script src="script.js"></script>
+  <script src="modern-interactions.js"></script>
+  
+  <style>
+    /* Conteúdo de teste para scroll */
+    .test-content {
+      padding: 100px 20px;
+      min-height: 200vh;
+    }
+    
+    .test-section {
+      margin: 50px 0;
+      padding: 40px;
+      background: var(--glass-bg);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+    
+    .test-section h2 {
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+    }
+    
+    .test-section p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Modernizada -->
+  <header class="header" role="banner">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-logo">
+          <img src="backend/public/media/logo.png" alt="PortalCoder" class="logo-img">
+        </div>
+        <nav class="header-nav" role="navigation" aria-label="Menu principal">
+          <ul class="nav-list">
+            <li><a href="#sobre" class="nav-link">Sobre</a></li>
+            <li><a href="#cursos" class="nav-link">Cursos</a></li>
+            <li><a href="#contato" class="nav-link">Contato</a></li>
+            <li><button id="modo-escuro-toggle" class="btn btn-ghost btn-sm" aria-label="Alternar modo escuro">🌙</button></li>
+            <li><button onclick="aumentarFonte()" class="btn btn-ghost btn-sm" aria-label="Aumentar fonte">A+</button></li>
+            <li><button onclick="diminuirFonte()" class="btn btn-ghost btn-sm" aria-label="Diminuir fonte">A-</button></li>
+            <li><button onclick="fazerLogout()" class="btn btn-danger btn-sm" aria-label="Fazer logout">🚪 Sair</button></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo de Teste -->
+  <main class="test-content">
+    <div class="container">
+      <section id="sobre" class="test-section">
+        <h2>Seção Sobre</h2>
+        <p>Esta é a seção "Sobre" para testar o destaque do link ativo na navegação. Role a página para ver o efeito de transparência da header e o destaque dos links.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+      </section>
+
+      <section id="cursos" class="test-section">
+        <h2>Seção Cursos</h2>
+        <p>Esta é a seção "Cursos" para demonstrar a navegação ativa. Observe como o link "Cursos" fica destacado quando você está nesta seção.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+      </section>
+
+      <section id="contato" class="test-section">
+        <h2>Seção Contato</h2>
+        <p>Esta é a seção "Contato" para completar o teste de navegação. A header deve ficar cada vez mais transparente conforme você rola para baixo.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
+      </section>
+
+      <section class="test-section">
+        <h2>Teste de Scroll</h2>
+        <p>Continue rolando para testar o efeito de transparência da header. A header deve ficar progressivamente mais transparente e com menos blur conforme você rola para baixo.</p>
+        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+      </section>
+
+      <section class="test-section">
+        <h2>Funcionalidades da Header</h2>
+        <p>Teste as funcionalidades da header:</p>
+        <ul>
+          <li>✅ <strong>Alinhamento horizontal</strong> - Todos os botões estão alinhados</li>
+          <li>✅ <strong>Efeito de transparência</strong> - Header fica transparente no scroll</li>
+          <li>✅ <strong>Navegação ativa</strong> - Links destacam a seção atual</li>
+          <li>✅ <strong>Animações suaves</strong> - Hover effects em todos os elementos</li>
+          <li>✅ <strong>Responsividade</strong> - Adapta-se a diferentes telas</li>
+          <li>✅ <strong>Glassmorphism</strong> - Efeito de vidro moderno</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Funções de teste para os botões
+    function aumentarFonte() {
+      alert('Função Aumentar Fonte ativada!');
+    }
+    
+    function diminuirFonte() {
+      alert('Função Diminuir Fonte ativada!');
+    }
+    
+    function fazerLogout() {
+      alert('Função Logout ativada!');
+    }
+    
+    // Toggle modo escuro
+    document.getElementById('modo-escuro-toggle').addEventListener('click', function() {
+      document.body.classList.toggle('modo-escuro');
+      this.textContent = document.body.classList.contains('modo-escuro') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>

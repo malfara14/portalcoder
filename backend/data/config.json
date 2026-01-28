@@ -1,0 +1,46 @@
+{
+  "site": {
+    "name": "Coder Factory",
+    "version": "1.0.0",
+    "environment": "development",
+    "port": 3000,
+    "baseUrl": "http://localhost:3000"
+  },
+  "features": {
+    "darkMode": true,
+    "fontResize": true,
+    "accessibility": true,
+    "vlibras": true,
+    "voiceSynthesis": true
+  },
+  "api": {
+    "baseUrl": "/api",
+    "contentEndpoint": "/api/content",
+    "assetsEndpoint": "/api/assets",
+    "timeout": 5000
+  },
+  "assets": {
+    "images": {
+      "path": "/api/assets/images",
+      "allowedFormats": ["jpg", "jpeg", "png", "gif", "svg", "webp"],
+      "maxSize": "5MB"
+    },
+    "videos": {
+      "path": "/api/assets/videos",
+      "allowedFormats": ["mp4", "webm", "ogg", "avi", "mov"],
+      "maxSize": "100MB"
+    }
+  },
+  "security": {
+    "cors": true,
+    "rateLimit": {
+      "windowMs": 900000,
+      "max": 100
+    }
+  },
+  "logging": {
+    "level": "info",
+    "console": true,
+    "file": false
+  }
+}

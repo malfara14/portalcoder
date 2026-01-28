@@ -1,0 +1,71 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "name": "Excel",
+      "description": "Aprenda Excel do básico ao avançado",
+      "duration": "40 horas",
+      "level": "Iniciante",
+      "category": "Office",
+      "image": "/api/assets/images/excel-course.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "description": "Programação em Python para iniciantes",
+      "duration": "60 horas",
+      "level": "Iniciante",
+      "category": "Programação",
+      "image": "/api/assets/images/python-course.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Arduino",
+      "description": "Eletrônica e programação com Arduino",
+      "duration": "50 horas",
+      "level": "Intermediário",
+      "category": "Eletrônica",
+      "image": "/api/assets/images/arduino-course.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Criação de Jogos",
+      "description": "Desenvolva seus próprios jogos",
+      "duration": "80 horas",
+      "level": "Intermediário",
+      "category": "Game Development",
+      "image": "/api/assets/images/games-course.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Inglês",
+      "description": "Inglês técnico para programadores",
+      "duration": "100 horas",
+      "level": "Todos os níveis",
+      "category": "Idiomas",
+      "image": "/api/assets/images/english-course.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Espanhol",
+      "description": "Espanhol para comunicação internacional",
+      "duration": "80 horas",
+      "level": "Todos os níveis",
+      "category": "Idiomas",
+      "image": "/api/assets/images/spanish-course.jpg"
+    }
+  ],
+  "categories": [
+    "Programação",
+    "Office",
+    "Eletrônica",
+    "Game Development",
+    "Idiomas"
+  ],
+  "levels": [
+    "Iniciante",
+    "Intermediário",
+    "Avançado",
+    "Todos os níveis"
+  ]
+}

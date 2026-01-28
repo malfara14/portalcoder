@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - PortalCoder</title>
+  
+  <!-- CSS Moderno -->
+  <link rel="stylesheet" href="modern-theme.css"/>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="animations.css"/>
+  <link rel="stylesheet" href="responsive.css"/>
+  
+  <!-- Scripts -->
+  <script src="api-client.js"></script>
+  <script src="course-manager.js"></script>
+  <script src="script.js" defer></script>
+  <script src="modern-interactions.js"></script>
+  <style>
+    /* Estilos específicos para dashboard moderno */
+    .dashboard-container {
+      min-height: 100vh;
+      background-image: url('backend/public/media/Background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      padding: var(--space-4);
+    }
+    
+    .dashboard-header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+    
+    .dashboard-header h1 {
+      color: var(--text-primary);
+      margin: 0;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-3xl);
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      color: var(--text-primary);
+    }
+    
+    .dashboard-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .dashboard-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
+    
+    .dashboard-section h2 {
+      color: var(--text-primary);
+      margin-bottom: var(--space-6);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-2xl);
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    
+    .form-group label {
+      color: var(--text-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    .form-group input, .form-group select {
+      background: var(--white);
+      border: 2px solid var(--glass-border);
+      color: var(--text-primary);
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .users-table {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .users-table th {
+      background: var(--primary-600);
+      color: var(--white);
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    .users-table td {
+      color: var(--text-primary);
+    }
+    
+    .users-table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container bg-portal">
+    <div class="container">
+      <div class="dashboard-header animate-fade-in-up">
+        <div class="flex justify-between items-center">
+          <div>
+            <h1>Dashboard Administrativo</h1>
+            <p class="text-muted mt-2">Gerencie usuários e configurações do sistema</p>
+          </div>
+          <div class="user-info">
+            <span id="userDisplay" class="text-primary font-semibold">Carregando...</span>
+            <button class="btn btn-primary btn-sm" onclick="entrarSistema()">Entrar no Sistema</button>
+            <button class="btn btn-danger btn-sm" onclick="fazerLogout()">Sair</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-section animate-fade-in-up">
+        <h2>Adicionar Novo Usuário</h2>
+        <form id="addUserForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nome" class="form-label">Nome Completo</label>
+              <input type="text" id="nome" name="nome" class="form-input" required placeholder="Digite o nome completo">
+            </div>
+            <div class="form-group">
+              <label for="usuario" class="form-label">Nome de Usuário</label>
+              <input type="text" id="usuario" name="usuario" class="form-input" required placeholder="Digite o nome de usuário">
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="email" id="email" name="email" class="form-input" required placeholder="Digite o e-mail">
+            </div>
+            <div class="form-group">
+              <label for="senha" class="form-label">Senha</label>
+              <input type="password" id="senha" name="senha" class="form-input" required placeholder="Digite a senha">
+            </div>
+            <div class="form-group">
+              <label for="tipo" class="form-label">Tipo de Usuário</label>
+              <select id="tipo" name="tipo" class="form-select">
+                <option value="usuario">Usuário</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
+          </div>
+        </form>
+        <div id="addUserAlert" class="alert hidden"></div>
+      </div>
+
+      <div class="dashboard-section animate-fade-in-up">
+        <h2>Gereniar Cursos</h2>
+        <form id="cursoForm" style="display: none;">
+          <input type="hidden" id="cursoId">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="cursoNome" class="form-label">Nome do Curso</label>
+              <input type="text" id="cursoNome" name="nome" class="form-input" required placeholder="Digite o nome do curso">
+            </div>
+            <div class="form-group">
+              <label for="cursoDescricao" class="form-label">Descrição</label>
+              <input type="text" id="cursoDescricao" name="descricao" class="form-input" required placeholder="Digite a descrição do curso">
+            </div>
+            <div class="form-group">
+              <label for="cursoDuracao" class="form-label">Duração</label>
+              <input type="text" id="cursoDuracao" name="duracao" class="form-input" required placeholder="Ex: 40h">
+            </div>
+            <div class="form-group">
+              <label for="cursoNivel" class="form-label">Nível</label>
+              <select id="cursoNivel" name="nivel" class="form-select" required>
+                <option value="Iniciante">Iniciante</option>
+                <option value="Intermediário">Intermediário</option>
+                <option value="Avançado">Avançado</option>
+                <option value="Todos os níveis">Todos os níveis</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cursoCategoria" class="form-label">Categoria</label>
+              <select id="cursoCategoria" name="categoria" class="form-select" required>
+                <option value="Office">Office</option>
+                <option value="Programação">Programação</option>
+                <option value="Eletrônica">Eletrônica</option>
+                <option value="Game Development">Game Development</option>
+                <option value="Idiomas">Idiomas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cursoEmoji" class="form-label">Emoji</label>
+              <input type="text" id="cursoEmoji" name="emoji" class="form-input" required placeholder="Ex: 📊">
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Salvar Curso</button>
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('cursoForm').style.display='none'">Cancelar</button>
+          </div>
+        </form>
+        <div class="card-footer mb-4">
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('cursoForm').style.display='block';document.getElementById('cursoId').value=''">Novo Curso</button>
+          <button class="btn btn-secondary btn-sm" onclick="courseManager.renderizarTabelaCursos('cursosLista')">Atualizar Lista</button>
+        </div>
+        <div id="cursosLista"></div>
+      </div>
+
+      <div class="dashboard-section animate-fade-in-up">
+        <h2>Gerenciar Usuários</h2>
+        <div class="card-footer">
+          <button class="btn btn-secondary btn-sm" onclick="carregarUsuarios()">Atualizar Lista</button>
+        </div>
+        <div id="usersList" class="mt-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-center text-muted">Clique em "Atualizar Lista" para carregar os usuários.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-section animate-fade-in-up">
+        <h2>Alterar Senha</h2>
+        <form id="changePasswordForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="changeUser" class="form-label">Usuário</label>
+              <select id="changeUser" name="changeUser" class="form-select" required>
+                <option value="">Selecione um usuário</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="newPassword" class="form-label">Nova Senha</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-input" required placeholder="Digite a nova senha">
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Alterar Senha</button>
+          </div>
+        </form>
+        <div id="changePasswordAlert" class="alert hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Verificar se usuário está logado
+    document.addEventListener('DOMContentLoaded', function() {
+      const usuario = verificarLogin();
+      if (!usuario || usuario.tipo !== 'admin') {
+        alert('Acesso negado. Apenas administradores podem acessar esta página.');
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      document.getElementById('userDisplay').textContent = `Bem-vindo, ${usuario.nome}!`;
+      
+      // Carregar usuários automaticamente
+      carregarUsuarios();
+    });
+
+    // Formulário para adicionar usuário
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const nome = formData.get('nome');
+      const usuario = formData.get('usuario');
+      const email = formData.get('email');
+      const senha = formData.get('senha');
+      const tipo = formData.get('tipo');
+      
+      const resultado = adicionarUsuario(nome, usuario, senha, email, tipo);
+      
+      const alert = document.getElementById('addUserAlert');
+      alert.textContent = resultado.mensagem;
+      alert.className = `alert ${resultado.sucesso ? 'alert-success' : 'alert-error'}`;
+      alert.classList.remove('hidden');
+      
+      if (resultado.sucesso) {
+        this.reset();
+        carregarUsuarios(); // Recarregar lista de usuários
+        setTimeout(() => {
+          alert.classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // Formulário para alterar senha
+    document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const usuario = formData.get('changeUser');
+      const novaSenha = formData.get('newPassword');
+      
+      if (!usuario) {
+        const alert = document.getElementById('changePasswordAlert');
+        alert.textContent = 'Selecione um usuário';
+        alert.className = 'alert alert-error';
+        alert.classList.remove('hidden');
+        return;
+      }
+      
+      const resultado = alterarSenha(usuario, novaSenha);
+      
+      const alert = document.getElementById('changePasswordAlert');
+      alert.textContent = resultado.mensagem;
+      alert.className = `alert ${resultado.sucesso ? 'alert-success' : 'alert-error'}`;
+      alert.classList.remove('hidden');
+      
+      if (resultado.sucesso) {
+        this.reset();
+        carregarUsuarios(); // Recarregar lista para atualizar select
+        setTimeout(() => {
+          alert.classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // Função para carregar e exibir usuários
+    function carregarUsuarios() {
+      const usuarios = listarUsuarios();
+      const usersList = document.getElementById('usersList');
+      const changeUserSelect = document.getElementById('changeUser');
+      
+      // Atualizar select de alterar senha
+      changeUserSelect.innerHTML = '<option value="">Selecione um usuário</option>';
+      usuarios.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.usuario;
+        option.textContent = `${user.nome} (${user.usuario})`;
+        changeUserSelect.appendChild(option);
+      });
+      
+      if (usuarios.length === 0) {
+        usersList.innerHTML = '<p>Nenhum usuário encontrado.</p>';
+        return;
+      }
+      
+      let html = `
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Usuário</th>
+              <th>E-mail</th>
+              <th>Tipo</th>
+              <th>Data de Criação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      
+      usuarios.forEach(user => {
+        const dataCriacao = new Date(user.dataCriacao).toLocaleDateString('pt-BR');
+        html += `
+          <tr>
+            <td>${user.nome}</td>
+            <td>${user.usuario}</td>
+            <td>${user.email}</td>
+            <td>${user.tipo}</td>
+            <td>${dataCriacao}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="removerUsuarioConfirm('${user.usuario}', '${user.nome}')">Remover</button>
+            </td>
+          </tr>
+        `;
+      });
+      
+      html += '</tbody></table>';
+      usersList.innerHTML = html;
+    }
+
+    // ==========================
+    // Gerenciar Cursos (admin)
+    // ==========================
+
+    async function fetchCourses() {
+      try {
+        const res = await fetch('/api/content/courses');
+        if (!res.ok) throw new Error('Falha ao buscar cursos');
+        const payload = await res.json();
+        return payload && payload.data && payload.data.courses ? payload.data.courses : (Array.isArray(payload) ? payload : []);
+      } catch (e) {
+        console.error('Erro ao buscar cursos:', e);
+        return [];
+      }
+    }
+
+    async function loadCoursesList() {
+      const cursos = await fetchCourses();
+      const container = document.getElementById('coursesList');
+      if (!cursos || cursos.length === 0) {
+        container.innerHTML = '<p>Nenhum curso encontrado.</p>';
+        return;
+      }
+
+      let html = '<div class="card"><div class="card-body">';
+      html += '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">';
+      cursos.forEach(c => {
+        html += `<li style="display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid var(--glass-border);border-radius:8px;">
+          <div>
+            <strong>${c.name || c.title}</strong><br/><small class="text-muted">${c.description || ''}</small>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-ghost btn-sm" onclick="editCourse(${c.id})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteCourse(${c.id})">Remover</button>
+          </div>
+        </li>`;
+      });
+      html += '</ul></div></div>';
+      container.innerHTML = html;
+    }
+
+    // Preencher o formulário para edição
+    window.editCourse = async function(id) {
+      const cursos = await fetchCourses();
+      const c = cursos.find(x => String(x.id) === String(id));
+      if (!c) return alert('Curso não encontrado');
+      document.getElementById('courseId').value = c.id;
+      document.getElementById('courseName').value = c.name || c.title || '';
+      document.getElementById('courseDescription').value = c.description || '';
+      document.getElementById('courseDuration').value = c.duration || '';
+      document.getElementById('courseLevel').value = c.level || '';
+      document.getElementById('courseCategory').value = c.category || '';
+    }
+
+    // Novo curso - limpa formulário
+    document.getElementById('courseNewBtn').addEventListener('click', function() {
+      document.getElementById('courseForm').reset();
+      document.getElementById('courseId').value = '';
+    });
+
+    // Deletar curso
+    window.deleteCourse = async function(id) {
+      if (!confirm('Remover este curso?')) return;
+      try {
+        const res = await fetch('/api/content/courses/' + id, { method: 'DELETE' });
+        const payload = await res.json();
+        if (res.ok && payload.success) {
+          alert('Curso removido.');
+          loadCoursesList();
+        } else {
+          alert('Erro ao remover curso: ' + (payload.message || payload.error || ''));
+        }
+      } catch (e) {
+        alert('Erro de conexão ao remover curso.');
+      }
+    }
+
+    // Salvar curso (create or update)
+    document.getElementById('courseForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('courseId').value;
+      const body = {
+        name: document.getElementById('courseName').value,
+        description: document.getElementById('courseDescription').value,
+        duration: document.getElementById('courseDuration').value,
+        level: document.getElementById('courseLevel').value,
+        category: document.getElementById('courseCategory').value
+      };
+      try {
+        let res;
+        if (id) {
+          res = await fetch('/api/content/courses/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        } else {
+          res = await fetch('/api/content/courses', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        }
+        const payload = await res.json();
+        if (res.ok && payload.success) {
+          alert('Curso salvo com sucesso.');
+          loadCoursesList();
+          this.reset();
+        } else {
+          alert('Erro ao salvar curso: ' + (payload.message || payload.error || ''));
+        }
+      } catch (e) {
+        alert('Erro de conexão ao salvar curso.');
+      }
+    });
+
+    // Carregar lista de cursos para o admin ao abrir a página
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCoursesList();
+    });
+
+    // Função para confirmar remoção de usuário
+    function removerUsuarioConfirm(usuario, userName) {
+      if (confirm(`Tem certeza que deseja remover o usuário "${userName}"?`)) {
+        const resultado = removerUsuario(usuario);
+        
+        if (resultado.sucesso) {
+          alert('Usuário removido com sucesso!');
+          carregarUsuarios(); // Recarregar lista
+        } else {
+          alert(`Erro ao remover usuário: ${resultado.mensagem}`);
+        }
+      }
+    }
+
+    // Função para entrar no sistema completo (Home do site)
+    function entrarSistema() {
+      // Verificar se o usuário está logado como admin
+      const usuario = verificarLogin();
+      if (!usuario || usuario.tipo !== 'admin') {
+        alert('Acesso negado. Apenas administradores podem acessar esta funcionalidade.');
+        return;
+      }
+      
+      // Redirecionar para o sistema completo (index.html)
+      // O usuário já está logado, então será direcionado diretamente para o conteúdo principal
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="user-manager.js"></script>
+</body>
+</html> 

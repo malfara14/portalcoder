@@ -1,0 +1,25 @@
+{
+  "name": "Coder Factory",
+  "description": "Escola moderna de Ciências da Computação",
+  "mission": "Instruir e atender a nova geração através do ensino da tecnologia",
+  "contact": {
+    "email": "contato@coderfactory.com",
+    "phone": "(11) 99999-9999",
+    "address": "Rua da Tecnologia, 123 - São Paulo, SP"
+  },
+  "social": {
+    "website": "https://www.coderfactory.com",
+    "facebook": "https://facebook.com/coderfactory",
+    "instagram": "https://instagram.com/coderfactory",
+    "linkedin": "https://linkedin.com/company/coderfactory"
+  },
+  "logo": {
+    "filename": "logo.png",
+    "alt": "Logo da Coder Factory",
+    "url": "/api/assets/logo"
+  },
+  "founded": "2024",
+  "students": "500+",
+  "courses": "10+",
+  "teachers": "20+"
+}

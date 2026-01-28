@@ -1,0 +1,71 @@
+{
+  "site": {
+    "title": "Coder Factory",
+    "subtitle": "Sistema Completo",
+    "description": "Somos uma escola moderna de Ciências das Computação. Nosso grande objetivo é instruir e atender a nova geração através do ensino da tecnologia."
+  },
+  "sections": {
+    "about": {
+      "title": "Sobre a Escola",
+      "content": "Nosso objetivo é ensinar e apoiar a nova geração no aprendizado de idiomas e no uso da tecnologia. Aqui, o conhecimento é para todos: oferecemos recursos em Libras e áudio, para que cada pessoa aprenda de forma acessível e inclusiva."
+    },
+    "courses": {
+      "title": "Nossos Cursos",
+      "description": "Oferecemos uma variedade de cursos para diferentes níveis e interesses."
+    },
+    "contact": {
+      "title": "Entre em Contato",
+      "description": "Tem alguma dúvida? Entre em contato conosco!",
+      "form": {
+        "name": "Nome",
+        "email": "E-mail",
+        "message": "Mensagem",
+        "submit": "Enviar"
+      }
+    },
+    "video": {
+      "title": "Apresentação em Vídeo",
+      "description": "Conheça mais sobre nossa escola através do vídeo de apresentação."
+    }
+  },
+  "login": {
+    "title": "🔐 Login - Coder Factory",
+    "username": "Usuário",
+    "password": "Senha",
+    "submit": "Entrar",
+    "noAccount": "Não tem conta?",
+    "signup": "Cadastre-se",
+    "dashboardLink": "Acessar Dashboard"
+  },
+  "dashboard": {
+    "title": "Dashboard Administrativo",
+    "welcome": "Bem-vindo",
+    "addUser": "Adicionar Novo Usuário",
+    "manageUsers": "Gerenciar Usuários",
+    "changePassword": "Alterar Senha",
+    "enter": "Entrar",
+    "logout": "Sair"
+  },
+  "messages": {
+    "loginSuccess": "Login realizado com sucesso!",
+    "loginError": "Usuário ou senha incorretos.",
+    "formRequired": "Preencha todos os campos.",
+    "contactSuccess": "Mensagem enviada com sucesso!",
+    "contactError": "Erro ao enviar mensagem.",
+    "accessDenied": "Acesso negado. Apenas administradores podem acessar esta página.",
+    "userAdded": "Usuário adicionado com sucesso!",
+    "userRemoved": "Usuário removido com sucesso!",
+    "passwordChanged": "Senha alterada com sucesso!"
+  },
+  "navigation": {
+    "about": "Sobre",
+    "courses": "Cursos",
+    "contact": "Contato",
+    "darkMode": "Alternar modo escuro",
+    "increaseFont": "Aumentar fonte",
+    "decreaseFont": "Diminuir fonte",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "profile": "Perfil"
+  }
+}

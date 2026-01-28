@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Debug Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 400px; margin: 0 auto; }
+    input, button { width: 100%; padding: 10px; margin: 5px 0; }
+    #resultado { margin-top: 20px; padding: 10px; border-radius: 5px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .warning { background: #fff3cd; color: #856404; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Debug Login</h2>
+    
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Usuário" value="admin">
+      <input type="password" id="senha" placeholder="Senha" value="1234">
+      <button type="submit">Testar Login</button>
+    </form>
+    
+    <div id="resultado"></div>
+    
+    <div style="margin-top: 20px;">
+      <h4>Testes:</h4>
+      <button onclick="testar('admin', '1234')">Admin correto</button>
+      <button onclick="testar('teste', '123456')">Teste correto</button>
+      <button onclick="testar('admin', 'errado')">Senha errada</button>
+      <button onclick="testar('inexistente', '123')">Usuário inexistente</button>
+    </div>
+  </div>
+
+  <script>
+    // Função de teste simplificada
+    function testar(usuario, senha) {
+      console.log('Testando:', usuario, senha);
+      
+      const resultado = document.getElementById('resultado');
+      
+      if (!usuario || !senha) {
+        resultado.textContent = "Preencha todos os campos.";
+        resultado.className = "error";
+        return;
+      }
+      
+      // Validação local
+      if ((usuario === "admin" && senha === "1234") || 
+          (usuario === "teste" && senha === "123456")) {
+        resultado.textContent = "✅ Login realizado com sucesso!";
+        resultado.className = "success";
+        console.log('Login bem-sucedido!');
+      } else {
+        // Verificar se o usuário existe mas a senha está incorreta
+        if (usuario === "admin" || usuario === "teste") {
+          resultado.textContent = "🔴 Senha incorreta. Tente novamente.";
+          resultado.className = "error";
+          console.log('Senha incorreta');
+        } else {
+          resultado.textContent = "🟠 Usuário não encontrado. Verifique o nome de usuário.";
+          resultado.className = "warning";
+          console.log('Usuário não encontrado');
+        }
+      }
+    }
+    
+    // Form submit
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+      testar(usuario, senha);
+    });
+    
+    // Teste automático ao carregar
+    window.addEventListener('load', function() {
+      console.log('Página carregada');
+      console.log('Elementos:', {
+        form: document.getElementById('loginForm'),
+        usuario: document.getElementById('usuario'),
+        senha: document.getElementById('senha'),
+        resultado: document.getElementById('resultado')
+      });
+    });
+  </script>
+</body>
+</html> 
